@@ -1,30 +1,17 @@
-function Home() {
-    return (
-      <div style={{
-          width: "100vw",
-          display: "flex",
-          justifyContent: "center"
-      }}>
-          <div style={{
-              width: "80vh",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-          }}>
-              <div>
-                  <h2>Seja Bem Vindo!</h2>
-                  <p>Expresse aqui seus pensamentos e opiniões</p>
-              </div>
-              <div style={{
-              width: "80vh",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-          }}>
-              <img src="https://i.imgur.com/VpwApCU.png" alt="Imagem da Página Home" width="400px"/> 
-              </div>
+
+interface homeProps {   // Interface para tipar as propriedades
+    titulo: string;
+    texto: string;
   
-          </div>
+  }
+  function Home(props: homeProps) {  // Função Home que recebe as propriedades
+    return (
+      <div>
+  
+        <h1>Componente Home</h1>
+        <h2>{props.titulo}</h2>
+        <p>{props.texto}</p>
+  
       </div>
     )
   }

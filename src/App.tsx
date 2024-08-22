@@ -1,11 +1,20 @@
-import Home from "./pages/home/Home"
+import './App.css'
+import Contador from './pages/contador/Contador'
+import Home from './pages/home/Home'
+import Tarefa from './pages/tarefa/tarefa'
 
 function App() {
-  // Código TypeScript
+
   return (
-    // Código TSX => HtML + CSS
     <>
-      <Home />
+        <Home 
+          titulo = "Minha primeira postagem"
+          texto = "Texto da minha primeira postagem"
+        />
+
+         <Contador />
+
+        <Tarefa />
     </>
   )
 }
