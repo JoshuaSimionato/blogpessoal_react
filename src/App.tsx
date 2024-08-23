@@ -1,22 +1,22 @@
-import './App.css'
-import Contador from './pages/contador/Contador'
-import Home from './pages/home/Home'
-import Tarefa from './pages/tarefa/tarefa'
+import Home from './pages/home/Home';
+import Footer from './components/footer/Footer';
+import Navbar from './components/navbar/Navbar';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-
   return (
     <>
-        <Home 
-          titulo = "Minha primeira postagem"
-          texto = "Texto da minha primeira postagem"
-        />
-
-         <Contador />
-
-        <Tarefa />
+      <BrowserRouter>
+        <Navbar/>
+        <div className='min-h-[80-vh]'>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/home" element={<Home/>} />
+          </Routes>
+        </div>
+        <Footer/>
+      </BrowserRouter>    
     </>
-  )
+);
 }
-
-export default App
+export default App;

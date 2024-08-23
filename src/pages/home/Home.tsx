@@ -1,19 +1,69 @@
+function Home() {
+  return (
+      
+      <div className="
+      bg-indigo-900
+      flex
+      justify-center" >
+          <div className="
+          container
+          grid
+          grid-cols-2
+          text-white
+          ">
+              <div className="
+              flex
+              flex-col
+              gap-4
+              items-center
+              justify-center
+              py-4
+              
+              ">
+                  <h2 className="
+                  text-5xl
+                  font-bold
+                  ">
+                      Seja Bem Vindo! </h2>
+                  <p className="text-xl">
+                      Expresse aqui seus pensamentos e opinões
+                  </p>
 
-interface homeProps {   // Interface para tipar as propriedades
-    titulo: string;
-    texto: string;
-  
-  }
-  function Home(props: homeProps) {  // Função Home que recebe as propriedades
-    return (
-      <div>
-  
-        <h1>Componente Home</h1>
-        <h2>{props.titulo}</h2>
-        <p>{props.texto}</p>
-  
+                  <div className="
+                  flex
+                  justify-around
+                  gap-4
+
+                  ">
+                      <div className="
+                      rounded
+                      border-white
+                      border-2
+                      py-2
+                      px-4
+                      ">
+
+                          Nova Postagem 
+
+                      </div>
+                  </div>
+
+
+              </div>
+              <div className="
+              flex
+              justify-center
+              " >
+
+                  <img
+                      src="https://i.imgur.com/VpwApCU.png"
+                      alt="Imagem da Página Home"
+                      className="w-2/3"
+                  />
+              </div>
+          </div>
       </div>
-    )
-  }
-  
-  export default Home
+  )
+}
+
+export default Home
