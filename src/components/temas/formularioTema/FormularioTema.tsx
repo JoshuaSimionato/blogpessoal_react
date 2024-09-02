@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Tema from '../../../models/Tema';
 import { atualizar, buscar, cadastrar } from '../../../services/Service';
+import { RotatingLines } from 'react-loader-spinner';
 
 function FormularioTema() {
   const [tema, setTema] = useState<Tema>({} as Tema);
@@ -12,7 +13,10 @@ function FormularioTema() {
   const { id } = useParams<{ id: string }>();
 
   const { usuario, handleLogout } = useContext(AuthContext);
+
   const token = usuario.token;
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function buscarPorId(id: string) {
     await buscar(`/tema/${id}`, setTema, {
@@ -39,6 +43,7 @@ function FormularioTema() {
 
   async function gerarNovoTema(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault()
+    setIsLoading(true)
 
     if (id !== undefined) {
       try {
@@ -49,7 +54,7 @@ function FormularioTema() {
         })
 
         alert('Tema atualizado com sucesso')
-        retornar()
+
 
       } catch (error: any) {
         if (error.toString().includes('403')) {
@@ -80,7 +85,7 @@ function FormularioTema() {
         }
       }
     }
-
+    setIsLoading(false)
     retornar()
   }
 
@@ -117,7 +122,15 @@ function FormularioTema() {
           className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto block"
           type="submit"
         >
-          {id === undefined ? 'Cadastrar' : 'Editar'}
+          {isLoading ? <RotatingLines
+            strokeColor="white"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="24"
+            visible={true}
+          /> :
+            <span>{id === undefined ? 'Cadastrar' : 'Atualizar'}</span>
+          }
         </button>
       </form>
     </div>

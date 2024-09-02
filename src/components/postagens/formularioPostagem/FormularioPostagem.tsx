@@ -7,7 +7,7 @@ import { buscar, atualizar, cadastrar } from "../../../services/Service";
 
 
 function FormularioPostagem() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
 
@@ -21,37 +21,43 @@ function FormularioPostagem() {
     descricao: '',
   });
 
-  const [postagem, setPostagem] = useState<Postagem>({
-    id: 0,
-    titulo: '',
-    texto: '',
-    data: '',
-    tema: null,
-    usuario: null,
-  });
+  const [postagem, setPostagem] = useState<Postagem>({} as Postagem)
 
   async function buscarPostagemPorId(id: string) {
-    await buscar(`/postagens/${id}`, setPostagem, {
-      headers: {
-        Authorization: token,
-      },
-    });
-  }
+    try {
+        await buscar(`/postagens/${id}`, setPostagem, {
+            headers: { Authorization: token }
+        })
+    } catch (error: any) {
+        if (error.toString().includes('401')) {
+            handleLogout()
+        }
+    }
+}
 
-  async function buscarTemaPorId(id: string) {
-    await buscar(`/tema/${id}`, setTema, {
-      headers: {
-        Authorization: token,
-      },
-    });
+async function buscarTemaPorId(id: string) {
+  try {
+      await buscar(`/tema/${id}`, setTema, {
+          headers: { Authorization: token }
+      })
+  } catch (error: any) {
+      if (error.toString().includes('401')) {
+          handleLogout()
+      }
   }
+}
+
 
   async function buscarTemas() {
-    await buscar('/tema', setTemas, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    try {
+      await buscar(`/tema`, setTemas, {  // array carrega no selete, não o objeto!
+          headers: { Authorization: token }
+      })
+  } catch (error: any) {
+      if (error.toString().includes('401')) {
+          handleLogout()
+      }
+  }
   }
 
   useEffect(() => {
@@ -91,11 +97,11 @@ function FormularioPostagem() {
   }
 
   async function gerarNovaPostagem(e: ChangeEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault(); 
 
     console.log({ postagem });
 
-    if (id != undefined) {
+    if (id !== undefined) {
       try {
         await atualizar(`/postagens`, postagem, setPostagem, {
           headers: {
@@ -103,9 +109,9 @@ function FormularioPostagem() {
           },
         });
         alert('Postagem atualizada com sucesso');
-        retornar();
+
       } catch (error: any) {
-        if (error.toString().includes('403')) {
+        if (error.toString().includes('401')) {
           alert('O token expirou, favor logar novamente')
           handleLogout()
         } else {
@@ -121,9 +127,9 @@ function FormularioPostagem() {
         });
 
         alert('Postagem cadastrada com sucesso');
-        retornar();
+       
       } catch (error: any) {
-        if (error.toString().includes('403')) {
+        if (error.toString().includes('401')) {
           alert('O token expirou, favor logar novamente')
           handleLogout()
         } else {
@@ -131,9 +137,12 @@ function FormularioPostagem() {
         }
       }
     }
+    retornar();
   }
 
   const carregandoTema = tema.descricao === '';
+
+  console.log(postagem);
 
   return (
     <div className="container flex flex-col mx-auto items-center">

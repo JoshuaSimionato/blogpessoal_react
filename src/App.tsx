@@ -10,6 +10,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import DeletarPostagem from "./components/postagens/deletarPostagem/deletarPostagem";
 
 
 
@@ -32,7 +33,7 @@ function App() {
               <Route path="/postagens" element={<ListaPostagens />} />
               <Route path="/cadastroPostagem" element={<FormularioPostagem />} />
               <Route path="/editarPostagem/:id" element={<FormularioPostagem />} />
-              
+              <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
             </Routes>
           </div>
           <Footer />
