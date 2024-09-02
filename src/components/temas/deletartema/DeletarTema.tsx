@@ -16,7 +16,7 @@ function DeletarTema() {
 
     async function buscarPorId(id: string) {
         try {
-            await buscar(`/temas/${id}`, setTema, {
+            await buscar(`/tema/${id}`, setTema, {
                 headers: {
                     'Authorization': token
                 }
@@ -43,12 +43,12 @@ function DeletarTema() {
     }, [id])
 
     function retornar() {
-        navigate("/temas")
+        navigate("/tema")
     }
 
     async function deletarTema() {
         try {
-            await deletar(`/temas/${id}`, {
+            await deletar(`/tema/${id}`, {
                 headers: {
                     'Authorization': token
                 }
