@@ -1,65 +1,64 @@
-import { createContext, ReactNode, useState } from "react"
-import UsuarioLogin from "../models/UsuarioLogin"
-import { login } from "../services/Service"
+import { createContext, ReactNode, useState } from "react";
+import UsuarioLogin from "../models/UsuarioLogin";
+import { login } from "../services/Service";
+import { ToastAlerta } from "../utils/ToastAlerta";
 
-
-interface AuthContextProps {    // Interface que define as propriedades do contexto
-    usuario: UsuarioLogin
-    handleLogout(): void
-    handleLogin(usuario: UsuarioLogin): Promise<void>
-    isLoading: boolean
+interface AuthContextProps {
+    usuario: UsuarioLogin;
+    handleLogout(): void;
+    handleLogin(usuario: UsuarioLogin): Promise<void>;
+    isLoading: boolean;
 }
 
-interface AuthProviderProps {     // Interface que define as propriedades do componente AuthProvider
-    children: ReactNode   // ReactNode é um tipo do React que aceita qualquer elemento filho
+interface AuthProviderProps {
+    children: ReactNode;
 }
 
-export const AuthContext = createContext({} as AuthContextProps)  // Cria o contexto AuthContext
+export const AuthContext = createContext({} as AuthContextProps)
 
-export function AuthProvider({children}: AuthProviderProps) {      // Função que retorna o componente AuthContext
-  
-    const [usuario, setUsuario] = useState<UsuarioLogin>({   // Estado que guarda o usuário logado
+export function AuthProvider({ children }: AuthProviderProps) {
+
+    const [usuario, setUsuario] = useState<UsuarioLogin>({
         id: 0,
-        nome: "",
-        usuario: "",
-        senha: "",
-        foto: "",
-        token: ""
-    })
+        nome: '',
+        usuario: '',
+        senha: '',
+        foto: '',
+        token: ''
+    });
 
-    const [isLoading, setIsLoading] = useState(false) // Estado que indica quando a animação (loader) será carregada
+    const [isLoading, setIsLoading] = useState(false);
 
-    async function handleLogin(userLogin: UsuarioLogin) {   // Função que faz o login do usuário
-        setIsLoading(true)
-        try {       // Tenta fazer o login
-            await login(`/usuarios/logar`, userLogin, setUsuario)
-            alert("Usuário logado com sucesso")
-            setIsLoading(false)
+    async function handleLogin(usuarioLogin: UsuarioLogin) {
 
-        } catch (error) {    // Se der erro, exibe o erro no console e exibe um alerta
-            console.log(error) 
-            alert("Dados do usuário inconsistentes")
-            setIsLoading(false)
+        setIsLoading(true);
+
+        try {
+            await login(`/usuarios/logar`, usuarioLogin, setUsuario);
+            ToastAlerta("Usuário autenticado com sucesso!", "sucesso");
+        } catch (error) {
+            ToastAlerta("Dados do Usuário inconsistentes!", "erro");
         }
+
+        setIsLoading(false);
     }
-    
-    function handleLogout() {     // Função que faz o logout do usuário
+
+    function handleLogout() {
         setUsuario({
             id: 0,
-            nome: "",
-            usuario: "",
-            senha: "",
-            foto: "",
-            token: ""
+            nome: '',
+            usuario: '',
+            senha: '',
+            foto: '',
+            token: '',
         })
     }
 
     return (
-        // Retorna o componente AuthContext.Provider com as propriedades do contexto
-        <AuthContext.Provider value={{ usuario, handleLogin, handleLogout, isLoading }}>   
+        <AuthContext.Provider value={{ usuario, handleLogin, handleLogout, isLoading }}>
             {children}
         </AuthContext.Provider>
-  )   
+    )
 }
 
-export default AuthContext
+export default AuthContext;
