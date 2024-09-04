@@ -42,6 +42,6 @@ export function ToastAlerta(mensagem: string, tipo: string) {
                 progress: undefined,
             });
         break;
-    }
+    } 
 
 }
